@@ -1,14 +1,10 @@
 version: '3'
 services:
   webdav:
-    image: bytemark/webdav
+    image: adgcontainerregistry.azurecr.io/repo-webdav:latest
     restart: always
     ports:
       - "80:80"
-    environment:
-      AUTH_TYPE: Digest
-      USERNAME: test
-      PASSWORD: test
     volumes:
       - ./dav:/var/lib/dav
 

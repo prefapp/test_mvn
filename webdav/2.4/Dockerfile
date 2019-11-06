@@ -1,4 +1,5 @@
-FROM httpd:alpine
+#FROM httpd:alpine
+FROM httpd:2.4.37-alpine
 
 # These variables are inherited from the httpd:alpine image:
 # ENV HTTPD_PREFIX /usr/local/apache2
@@ -16,7 +17,7 @@ RUN set -ex; \
     chown -R www-data:www-data "/var/lib/dav"; \
     \
     # Enable DAV modules.
-    for i in dav dav_fs; do \
+    for i in dav dav_fs ldap; do \
         sed -i -e "/^#LoadModule ${i}_module.*/s/^#//" "conf/httpd.conf"; \
     done; \
     \
@@ -45,7 +46,6 @@ RUN set -ex; \
     mkdir -p "conf/conf-enabled"; \
     mkdir -p "conf/sites-enabled"; \
     ln -s ../conf-available/dav.conf "conf/conf-enabled"; \
-    ln -s ../conf-available/repo.conf "conf/conf-enabled"; \
     ln -s ../sites-available/default.conf "conf/sites-enabled"; \
     # Install openssl if we need to generate a self-signed certificate.
     apk add --no-cache openssl
